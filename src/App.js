@@ -8,26 +8,26 @@ function App() {
   // Function to fetch data from Firebase
   const fetchData = () => {
     axios
-      .get("https://console.firebase.google.com/u/0/project/debugging-axios-integration/database/debugging-axios-integration-default-rtdb/data/~2F?fb_gclid=CjwKCAiA7Y28BhAnEiwAAdOJUHIAgN85rmlzD6j3ROlnR6-S0pmxFxbZjQEvdmDYYdogSB5XU9M8BRoCFa0QAvD_BwE") // Replace with your Firebase URL
+      .get('https://debugging-axios-integration-default-rtdb.firebaseio.com/tasks.json') // Use correct URL
       .then((response) => {
         const taskData = response.data;
         
-        // Check if taskData exists, then format it as an array
         if (taskData) {
           const parsedTasks = Object.keys(taskData).map((key) => ({
             id: key,
-            name: taskData[key].name, // Assuming each task has a 'name' property
+            name: taskData[key].name,
           }));
-          setTasks(parsedTasks); // Set the tasks in the state
+          setTasks(parsedTasks);
         } else {
-          setTasks([]); // Set an empty array if no data is found
+          setTasks([]);
         }
       })
       .catch((error) => {
-        console.log("Error fetching tasks:", error);
-        setError("Failed to load tasks, please try again later."); // Set error message
+        console.error("Error fetching tasks:", error);
+        setError("Failed to load tasks, please try again later.");
       });
   };
+  
 
   // Fetch data when the component is mounted
   useEffect(() => {
